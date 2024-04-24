@@ -5,17 +5,13 @@
 		width: 1180px;
 		height: 120px;
 		margin: 0 auto;
-		background-color: #ccc;
 		position: relative;
 		h1 {
 			position: absolute;
 			bottom: 15px;
 			left: 0px;
 			a {
-				font-weight: bold;
-				font-size: 24px;
-				line-height: 1;
-				font-family: arial;
+				font: bold 24px/1 'arial';
 				color: #444;
 			}
 		}
@@ -29,7 +25,6 @@
 					a {
 						display: block;
 						padding: 14px 40px;
-						/* background-color: aqua; */
 						font: bold 14px/1 'arial';
 						color: #777;
 						&:hover {
@@ -44,7 +39,6 @@
 				top: 20px;
 				right: 40px;
 				display: flex;
-
 				gap: 20px;
 				li {
 					a {
@@ -70,8 +64,15 @@
 				position: absolute;
 				top: 0px;
 				left: 0px;
+				transition: top 0.5s 0s, transform 0.5s 0.5s;
+				// 트랜지션 프로퍼티, 듀레이션, 딜레이
+				// transition-property (대상) top이라는 대상을
+				// transition-duration (기간) 0.5초 동안 효과를 주며
+				// transition-delay (딜레이=시간을 끔) 0 시간을 끌지 않음
+				// 0.5초 동안 기다렸다가 rotate가 진행됨
 			}
 			&::after {
+				// @include noclear;
 				content: '';
 				display: block;
 				width: 100%;
@@ -80,16 +81,34 @@
 				position: absolute;
 				bottom: 0px;
 				left: 0px;
+				transition: bottom 0.5s 0s, transform 0.5s 0.5s;
 			}
 			span {
 				position: absolute;
-				text-indent: -9999999px;
+				text-indent: -999999999px;
 				display: block;
 				width: 100%;
 				height: 2px;
 				background-color: #000;
 				top: 50%;
 				margin-top: -1px;
+				transition: all 1s;
+			}
+			&.on {
+				&::before {
+					top: 50%;
+					margin-top: -1px;
+					transform: rotate(45deg);
+				}
+				&::after {
+					bottom: 50%;
+					margin-bottom: -1px;
+					transform: rotate(-45deg);
+				}
+				span {
+					transform: translateX(100%);
+					opacity: 0;
+				}
 			}
 		}
 		.menuMo {
@@ -101,20 +120,24 @@
 			left: -270px;
 			z-index: 10;
 			padding: 35px 30px;
+			transition: all 0.5s;
+			&.on {
+				left: 0px;
+			}
 			h2 {
 				border-bottom: 1px solid #ccc;
 				padding-bottom: 30px;
 				a {
 					font: bold 24px/1 'arial';
 					color: #fff;
-					display: block;
+					display: flex;
 					text-align: center;
 					margin-bottom: 5px;
 				}
 				span {
-					display: block;
 					font-size: 12px;
 					color: #aaa;
+					display: block;
 					text-align: center;
 				}
 			}
@@ -122,7 +145,7 @@
 				li {
 					a {
 						display: block;
-						padding: 20px 0px;
+						padding: 20px 0;
 						font: bold 14px/1 '맑은 고딕';
 						text-align: center;
 						color: #888;
@@ -134,11 +157,6 @@
 }
 
 @media screen and (max-width: 700px) {
-	/* 미디어 쿼리부분에서는
-반드시 이전 영역코드의 네스팅을 따라서
-써주어야 코드의 충돌로 인한 깨짐이 안일어남
-또한 유지보수측면에서도 유익합니다
-*/
 	#header {
 		.inner {
 			width: 100%;
